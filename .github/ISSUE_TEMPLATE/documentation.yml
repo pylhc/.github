@@ -1,0 +1,41 @@
+name: "📚 Documentation"
+description: Suggest edits or additions for the documentation
+title: "[Documentation]: "
+labels: ["Enhancement", "Documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for making a request. Please provide a clear and concise description of the desired changes.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Documentation
+      description: Have you read the relevant documentation before submitting this issue?
+      options:
+        - label: Yes
+          required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Pertinent Section
+      description: "Please provide a permalink to the relevant section heading in the documentation. Choose the most specific section / lowest-level heading to which your suggested change would apply."
+      placeholder: "https://pylhc.github.io/..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Suggested Changes or Additions
+      description: Provide a clear and concise description of the changes you want to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestions
+    attributes:
+      label: Possible Content
+      description: If you can think of a very specific change to the documentation, feel free to directly submit it in this box.
