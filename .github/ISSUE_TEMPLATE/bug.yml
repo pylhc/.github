@@ -1,0 +1,76 @@
+name: "🐞 Bug Report"
+description: Report an issue with the package
+title: "[Bug]: "
+labels: ["Bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening a bug report, please search if the problematic behavior has already been reported in the existing issues. 
+        
+        ---
+        
+        Thank you for taking the time to file a bug report. To address this bug as fast as possible, we need some information.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Documentation
+      description: Have you read the relevant documentation before submitting this issue?
+      options:
+        - label: Yes
+          required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: "Which operating system do you encounter the issue on? Please provide the version as well."
+      placeholder: "Example: macOS Big Sur 11.5.2"
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python Version
+      description: "Please provide the full Python version under which you have observed the behavior."
+      placeholder: "Example: 3.9.0"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Package Version
+      description: "Please provide the full version of the package under which you have observed the behavior."
+      placeholder: "Example: 1.2.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Give us a clear and concise description of the problem and the expected behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Describe the steps needed to reproduce this error.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output
+      description: If applicable, provide relevant log output (no need for back-ticks here).
+      render: shell
+
+  - type: textarea
+    id: suggestions
+    attributes:
+      label: Possible Fix Implementation
+      description: If you can think of one, describe a possible implementation that would fix the issue.
