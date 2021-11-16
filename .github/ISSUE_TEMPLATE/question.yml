@@ -1,0 +1,26 @@
+name: "🙋 Ask a Question"
+description: Discuss questions you have about the
+title: "[Question]: "
+labels: ["Help", "Question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We are happy to get feedback and help users of our packages. Let's discuss!
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Documentation
+      description: Have you read the relevant documentation before asking your question?
+      options:
+        - label: Yes
+          required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What would you like to ask the team?
+    validations:
+      required: true
