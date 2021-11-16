@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Check the docs
+    # url: https://pylhc.github.io/<repository>
+    about: 'Check out the API documentation at the link provided in the repository's About section.'
+  - name: Check the OMC website
+    url: https://pylhc.github.io/
+    about: 'Before opening an issue, take the time to check if the information you are looking for is in the OMC website.'
