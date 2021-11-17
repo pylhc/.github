@@ -14,7 +14,7 @@ body:
       label: Documentation
       description: Have you read the relevant documentation before asking your question?
       options:
-        - label: Yes
+        - label: "Yes"
           required: true
 
   - type: textarea

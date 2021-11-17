@@ -18,7 +18,7 @@ body:
       label: Documentation
       description: Have you read the relevant documentation before submitting this issue?
       options:
-        - label: Yes
+        - label: "Yes"
           required: true
 
   - type: input
