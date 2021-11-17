@@ -1,5 +1,5 @@
 name: "🙋 Ask a Question"
-description: Discuss questions you have about the
+description: Discuss questions you have about the software
 title: "[Question]: "
 labels: ["Help", "Question"]
 body:
