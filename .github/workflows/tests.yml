@@ -53,7 +53,7 @@ defaults:
     shell: bash
 
 jobs:
-  tests:  # Runs the basic tests, aka all tests not marked with "extended", on all push events
+  tests: 
     name: ${{ inputs.name }} / ${{ matrix.os }} / ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -78,5 +78,5 @@ jobs:
       - name: Install package
         run: python -m pip install '.[${{ inputs.extra-dependencies }}]'
 
-      - name: Run Basic Tests
+      - name: Run Tests  (${{ inputs.name }})
         run: python -m pytest ${{ inputs.pytest-options }}
