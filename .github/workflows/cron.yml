@@ -1,10 +1,10 @@
 # Caller Template --------------------------------------------------------------
 
-# # Runs all tests on master everyday at 10 am (UTC time)
+# # Runs all tests on master on Mondays at 3 am (UTC time)
 # name: Cron Testing
 
 
-# on:  # Runs on master branch on Mondays at 3am UTC time
+# on: 
 #   schedule:
 #     - cron:  '* 3 * * mon'
 
