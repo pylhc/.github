@@ -13,6 +13,7 @@
 #   coverage:
 #       uses: pylhc/.github/.github/workflows/coverage.yml@master
 #       with:
+#         src-dir: omc3
 #         pytest-options: -m "not cern_network"
 #       secrets: inherit
 
