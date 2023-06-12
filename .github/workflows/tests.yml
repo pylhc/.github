@@ -16,14 +16,12 @@
 #     basic-tests:
 #       uses: pylhc/.github/.github/workflows/tests.yml@master
 #       with:
-#         name: basic
 #         pytest-options: -m "not extended and not cern_network"
 
 #     extended-tests:
 #       needs: basic-tests
 #       uses: pylhc/.github/.github/workflows/tests.yml@master
 #       with:
-#         name: extended
 #         pytest-options: -m "extended and not cern_network"
 
 # ------------------------------------------------------------------------------

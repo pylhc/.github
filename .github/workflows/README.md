@@ -22,14 +22,13 @@ Tests are ensured in the `tests` workflow.
 Tests run on a matrix of all supported operating systems (`ubuntu-20.04`, `ubuntu-22.04`, `windows-latest` and `macos-latest`) for all supported Python versions (currently `3.8` to `3.11`).
 
 Input parameters: 
-  - `name` - an optional string, to identify different pytest-configurations (defaults to `tests`).
   - `pytest-options` - options to be passed on to `pytest`, e.g. `-m "not extended and not cern_network"` (defaults to an empty string).
   - `extra-dependencies` - name of the extra dependencies required to run the tests (defaults to `test`).
   - `dependency-file` - name of the file which contains the dependencies (used to get a hash-id for the caching).
 
-These tests are usually run in two stages, which is easy to achieve by calling the test with different `pytest-options`.
-It should be run on all push events except to `master`. 
-The first stage runs our simple tests (the `basic` tests) , and the second one runs the rest of the testing suite (the `extended` tests).
+These tests could easily be run in two stages by calling the test with different `pytest-options`.
+E.g. the first stage runs our simple tests (the `basic` tests), and the second one runs the rest of the testing suite (the `extended` tests).
+The workflow should be run on all push-events except to `master`. 
 
 ## Test Coverage
 
