@@ -5,10 +5,12 @@ They are organized as follows.
 
 ## Documentation
 
-The `documentation` workflow builds the documentation and pushes it to the `gh-pages` branch (if the build is successful).
+The `documentation` workflow builds the documentation. 
 It runs on `ubuntu-latest` and one of our supported version, currently `Python 3.9`.
+If the workflow is run from `master` it pushes the successfully build documentation to the `gh-pages` branch,
+if it is run from a `pull_request` the documentation is uploaded as an artifact to allow manual checks.
 
-It should be triggered on any push to `master`.
+This workflow should only be triggered on pushes to `master` and on `pull_request`s.
 
 ## Testing Suite
 
