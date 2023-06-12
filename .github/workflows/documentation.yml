@@ -36,20 +36,17 @@ defaults:
 
 jobs:
   documentation:
-    name: ${{ matrix.os }} / ${{ matrix.python-version }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:  # only a single supported Python on latest ubuntu
-        os: [ubuntu-latest]
-        python-version: [3.9]
+    runs-on: ubuntu-latest
+    env:
+        python-version: 3.9
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python $python-version
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: $python-version
           cache: 'pip'
           cache-dependency-path: '**/${{ inputs.dependency-file }}'
 
