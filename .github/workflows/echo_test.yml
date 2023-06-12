@@ -1,0 +1,26 @@
+# Simple reusable workflow, to test workflows calls with input
+
+name: Echo Test Workflow 
+
+defaults:
+  run:
+    shell: bash
+
+
+on:
+  workflow_call:
+    inputs:
+      test-input:
+        required: false
+        type: string
+        default: "DEFAULT INPUT"   # without default: empty string
+    
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo the input
+        run: |
+          echo ${{ inputs.test-input }}
+    
