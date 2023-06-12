@@ -1,0 +1,58 @@
+# Caller Template --------------------------------------------------------------
+
+# # Runs all tests on master everyday at 10 am (UTC time)
+# name: Cron Testing
+
+
+# on:  # Runs on master branch on Mondays at 3am UTC time
+#   schedule:
+#     - cron:  '* 3 * * mon'
+
+# jobs:
+#     tests:
+#       uses: pylhc/.github/.github/workflows/cron.yml@master
+#       with:
+#         pytest-options: -m "not cern_network"
+
+# ------------------------------------------------------------------------------
+name: Reusable Cron-Testing
+
+on:
+  workflow_call:
+    inputs:
+      pytest-options:
+        required: false 
+        type: string
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  tests:
+    name: ${{ matrix.os }} / ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ubuntu-22.04, macos-latest, windows-latest]
+        # Make sure to escape 3.10 with quotes so it doesn't get interpreted as float 3.1 by GA's parser
+        python-version: [3.8, 3.9, "3.10", "3.11", 3.x]  # crons should always run latest python hence 3.x
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: '**/setup.py'
+
+      - name: Upgrade pip, setuptools and wheel
+        run: python -m pip install --upgrade pip setuptools wheel
+
+      - name: Install package
+        run: python -m pip install '.[test]'
+
+      - name: Run Tests
+        run: python -m pytest ${{ inputs.pytest-options }}

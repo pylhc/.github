@@ -1,4 +1,6 @@
-name: Reusable workflow example
+# Simple reusable workflow, to test workflows calls with input
+
+name: Echo Test Workflow 
 
 defaults:
   run:
@@ -9,8 +11,9 @@ on:
   workflow_call:
     inputs:
       test-input:
-        required: true
+        required: false
         type: string
+        default: "DEFAULT INPUT"   # without default: empty string
     
 
 jobs:
