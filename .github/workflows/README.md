@@ -10,6 +10,10 @@ It runs on `ubuntu-latest` and one of our supported version, currently `Python 3
 If the workflow is run from `master` it pushes the successfully build documentation to the `gh-pages` branch,
 if it is run from a `pull_request` the documentation is uploaded as an artifact to allow manual checks.
 
+Input parameters: 
+  - `extra-dependencies` - name of the extra dependencies required to run the tests (defaults to `doc`).
+  - `dependency-file` - name of the file which contains the dependencies (used to get a hash-id for the caching).
+
 This workflow should only be triggered on pushes to `master` and on `pull_request`s.
 
 ## Testing Suite
@@ -20,6 +24,8 @@ Tests run on a matrix of all supported operating systems (`ubuntu-20.04`, `ubunt
 Input parameters: 
   - `name` - an optional string, to identify different pytest-configurations (defaults to `tests`).
   - `pytest-options` - options to be passed on to `pytest`, e.g. `-m "not extended and not cern_network"` (defaults to an empty string).
+  - `extra-dependencies` - name of the extra dependencies required to run the tests (defaults to `test`).
+  - `dependency-file` - name of the file which contains the dependencies (used to get a hash-id for the caching).
 
 These tests are usually run in two stages, which is easy to achieve by calling the test with different `pytest-options`.
 It should be run on all push events except to `master`. 
@@ -34,19 +40,23 @@ Input parameters:
   - `src-dir` - a required string, which indicates the name of the directory 
                 containing the source-code for which the coverage is calculated.
   - `pytest-options` - options to be passed on to `pytest`, e.g. `-m "not cern_network"` (defaults to an empty string).
+  - `extra-dependencies` - name of the extra dependencies required to run the tests (defaults to `test`).
+  - `dependency-file` - name of the file which contains the dependencies (used to get a hash-id for the caching).
 
 Secrets:
   - `CC_TEST_REPORTER_ID` - The CodeClimate test-reporter ID.
 
-This workflow should be triggered on pushes to `master` and any push to a `pull request`
+This workflow should be triggered on pushes to `master` and any push to a `pull request`.
 
 ## Regular Testing
 
 A `cron` workflow runs the full testing suite, on all available operating systems and supported Python versions.
 It is very similar to the normal Testing Suite, but in addition also runs on `Python 3.x` so that newly released Python versions that would break tests are automatically included.
 
-Input parameters are: 
+Input parameters: 
   - `pytest-options` - options to be passed on to `pytest`, e.g. `-m "not cern_network"` (defaults to an empty string).
+  - `extra-dependencies` - name of the extra dependencies required to run the tests (defaults to `test`).
+  - `dependency-file` - name of the file which contains the dependencies (used to get a hash-id for the caching).
 
 The workflow should be triggered in regular intervals, e.g. every Monday at 3am (UTC time).
 
@@ -54,6 +64,9 @@ The workflow should be triggered in regular intervals, e.g. every Monday at 3am 
 
 Publishing to `PyPI` is done through the `publish` workflow, 
 which builds a `wheel`, checks it, and pushes to `PyPI` if checks are successful.
+
+Input parameters: 
+  - `dependency-file` - name of the file which contains the dependencies (used to get a hash-id for the caching).
 
 Secrets:
   - `PYPI_USERNAME` - The pypi username.
