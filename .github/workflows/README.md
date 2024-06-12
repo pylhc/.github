@@ -6,7 +6,7 @@ They are organized as follows.
 ## Documentation
 
 The `documentation` workflow builds the documentation. 
-It runs on `ubuntu-latest` and one of our supported version, currently `Python 3.11`.
+It runs on `ubuntu-latest` and one of our supported version, currently `Python 3.12`.
 If the workflow is run from `master` it pushes the successfully build documentation to the `gh-pages` branch,
 if it is run from a `pull_request` the documentation is uploaded as an artifact to allow manual checks.
 
@@ -19,7 +19,7 @@ This workflow should only be triggered on pushes to `master` and on `pull_reques
 ## Testing Suite
 
 Tests are ensured in the `tests` workflow.
-Tests run on a matrix of all supported operating systems (`ubuntu-20.04`, `ubuntu-22.04`, `windows-latest` and `macos-latest`) for all supported Python versions (currently `3.8` to `3.12`).
+Tests run on a matrix of all supported operating systems (`ubuntu-22.04`, `ubuntu-24.04`, `windows-latest` and `macos-latest`) for all supported Python versions (currently `3.9` to `3.12`).
 
 Input parameters: 
   - `pytest-options` - options to be passed on to `pytest`, e.g. `-m "not extended and not cern_network"` (defaults to an empty string).
@@ -33,7 +33,7 @@ The workflow should be run on all push-events except to `master`.
 ## Test Coverage
 
 Test coverage is calculated in the `coverage` workflow.
-It runs on `ubuntu-latest` and `Python 3.11`, and reports the coverage results of the test suite to `CodeClimate`.
+It runs on `ubuntu-latest` and `Python 3.12`, and reports the coverage results of the test suite to `CodeClimate`.
 
 Input parameters: 
   - `src-dir` - a required string, which indicates the name of the directory 
