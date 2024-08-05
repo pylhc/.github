@@ -36,7 +36,7 @@ on:
       dependency-file:
         required: false 
         type: string
-        default: setup.py
+        default: pyproject.toml
     secrets: 
         CC_TEST_REPORTER_ID:
             required: true

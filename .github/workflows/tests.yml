@@ -40,7 +40,7 @@ on:
       dependency-file:
         required: false 
         type: string
-        default: setup.py
+        default: pyproject.toml
 
 defaults:
   run:
