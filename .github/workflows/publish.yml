@@ -21,7 +21,7 @@ on:
       dependency-file:
         required: false 
         type: string
-        default: setup.py
+        default: pyproject.toml
     secrets: 
         PYPI_USERNAME:
             required: true
