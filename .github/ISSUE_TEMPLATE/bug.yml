@@ -6,20 +6,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        Before opening a bug report, please search if the problematic behavior has already been reported in the existing issues. 
+        Before opening a bug report, please search if the problematic behavior has already been reported in the existing issues
+        and read the relevant documentation.
         
         ---
         
         Thank you for taking the time to file a bug report. To address this bug as fast as possible, we need some information.
-
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Documentation
-      description: Have you read the relevant documentation before submitting this issue?
-      options:
-        - label: "Yes"
-          required: true
 
   - type: input
     id: os
