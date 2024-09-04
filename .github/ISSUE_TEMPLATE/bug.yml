@@ -7,38 +7,7 @@ body:
     attributes:
       value: |
         Before opening a bug report, please search if the problematic behavior has already been reported in the existing issues
-        and read the relevant documentation.
-        
-        ---
-        
-        Thank you for taking the time to file a bug report. To address this bug as fast as possible, we need some information.
-
-  - type: input
-    id: os
-    attributes:
-      label: Operating System
-      description: "Which operating system do you encounter the issue on? Please provide the version as well."
-      placeholder: "Example: macOS Big Sur 11.5.2"
-    validations:
-      required: true
-
-  - type: input
-    id: python
-    attributes:
-      label: Python Version
-      description: "Please provide the full Python version under which you have observed the behavior."
-      placeholder: "Example: 3.9.0"
-    validations:
-      required: true
-
-  - type: input
-    id: version
-    attributes:
-      label: Package Version
-      description: "Please provide the full version of the package under which you have observed the behavior."
-      placeholder: "Example: 1.2.0"
-    validations:
-      required: true
+        and read the relevant documentation. Thank you for taking the time to file a bug report. 
 
   - type: textarea
     id: description
@@ -53,6 +22,45 @@ body:
     attributes:
       label: Steps to Reproduce
       description: Describe the steps needed to reproduce this error.
+  
+  - type: textarea
+    id: suggestions
+    attributes:
+      label: Possible Fix Implementation
+      description: If you can think of one, describe a possible implementation that would fix the issue.
+  
+  - type: markdown
+    attributes:
+      value: |
+        ----
+        To help us reproduce the issue, please include the following information in your bug report:
+  
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: "Which operating system do you encounter the issue on? Please provide the version as well."
+      placeholder: "Example: macOS Big Sur 11.5.2"
+    validations:
+      required: false 
+
+  - type: input
+    id: python
+    attributes:
+      label: Python Version
+      description: "Please provide the full Python version under which you have observed the behavior."
+      placeholder: "Example: 3.9.0"
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Package Version
+      description: "Please provide the full version of the package under which you have observed the behavior."
+      placeholder: "Example: 1.2.0"
+    validations:
+      required: false
 
   - type: textarea
     id: logs
@@ -60,9 +68,3 @@ body:
       label: Relevant output
       description: If applicable, provide relevant log output (no need for back-ticks here).
       render: shell
-
-  - type: textarea
-    id: suggestions
-    attributes:
-      label: Possible Fix Implementation
-      description: If you can think of one, describe a possible implementation that would fix the issue.
