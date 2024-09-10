@@ -16,14 +16,17 @@ jobs:
   assign-labels:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the repo
-        uses: actions/checkout@v4
-
-      - name: Install github-label-sync
+      # - name: Checkout the repo
+      #   uses: actions/checkout@v4
+      - name: Test the repo
         run: |
-          npm install -g github-label-sync
+          tree
 
-      - name: Assign labels into all repos
-        working-directory: ./labels  # labels.json is default filename for github-label-sync
-        run: |
-          github-label-sync pylhc/optics_functions
+      # - name: Install github-label-sync
+      #   run: |
+      #     npm install -g github-label-sync
+
+      # - name: Assign labels into all repos
+      #   working-directory: ./labels  # labels.json is default filename for github-label-sync
+      #   run: |
+      #     github-label-sync pylhc/optics_functions
