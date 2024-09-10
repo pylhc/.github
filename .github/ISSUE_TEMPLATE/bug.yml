@@ -1,7 +1,7 @@
 name: "🐞 Bug Report"
-description: Report an issue with the package
+description: Report an issue with the package in detail
 title: "[Bug]: "
-labels: ["Bug"]
+labels: ["Type: Bug"]
 body:
   - type: markdown
     attributes:

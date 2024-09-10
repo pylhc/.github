@@ -1,7 +1,7 @@
 name: "📚 Documentation"
 description: Suggest edits or additions for the documentation
 title: "[Documentation]: "
-labels: ["Enhancement", "Documentation"]
+labels: ["Type: Feature", "Type: Documentation"]
 body:
   - type: markdown
     attributes:
@@ -23,8 +23,6 @@ body:
       label: Pertinent Section
       description: "Please provide a permalink to the relevant section heading in the documentation. Choose the most specific section / lowest-level heading to which your suggested change would apply."
       placeholder: "https://pylhc.github.io/..."
-    validations:
-      required: true
 
   - type: textarea
     id: description

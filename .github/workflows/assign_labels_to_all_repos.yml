@@ -1,0 +1,24 @@
+# Assign labels from json definition to all repos
+# This uses https://github.com/Financial-Times/github-label-sync
+
+name: Assign labels to all repos
+
+on:  # Runs on any push event in a PR or any push event to master
+  push:
+    branches:
+      - 'issue_redesign'
+
+defaults:
+  run:
+    shell: bash
+    
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: install github-label-sync
+        run: |
+          npm install -g github-label-sync
+      - name: Install into all repos
+        run: |
+          github-label-sync --labels .github/assets/labels.json pylhc/optics_functions
