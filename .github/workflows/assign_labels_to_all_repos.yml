@@ -38,3 +38,4 @@ jobs:
         run: |
           github-label-sync pylhc/irnl_rdt_correction
           github-label-sync pylhc/optics_functions
+          github-label-sync pylhc/.github
