@@ -1,4 +1,4 @@
-name: "🐞 Quick Bug Report"
+name: "🐜 Quick Bug Report"
 description: Report an issue with the package
 title: "[Bug]: "
 labels: ["Type: Bug"]
