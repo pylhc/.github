@@ -21,4 +21,4 @@ jobs:
           npm install -g github-label-sync
       - name: Install into all repos
         run: |
-          github-label-sync --labels .github/assets/labels.json pylhc/optics_functions
+          github-label-sync --labels ./assets/labels.json pylhc/optics_functions
