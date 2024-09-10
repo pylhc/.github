@@ -11,10 +11,10 @@ on:  # Runs on any push event in a PR or any push event to master
 defaults:
   run:
     shell: bash
-    working-directory: ./.github/labels  # labels.json is default filename for github-label-sync
+    working-directory: ../labels  # labels.json is default filename for github-label-sync
     
 jobs:
-  run-test:
+  assign-labels:
     runs-on: ubuntu-latest
     steps:
       - name: install github-label-sync
