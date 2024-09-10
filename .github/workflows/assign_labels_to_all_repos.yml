@@ -36,6 +36,6 @@ jobs:
           # GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACCESS_TOKEN: ${{ secrets.ISSUE_WRITE_TOKEN }}
         run: |
+          github-label-sync pylhc/.github
           github-label-sync pylhc/irnl_rdt_correction
           github-label-sync pylhc/optics_functions
-          github-label-sync pylhc/.github
