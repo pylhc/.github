@@ -24,6 +24,6 @@ jobs:
           npm install -g github-label-sync
 
       - name: Assign labels into all repos
-        working-directory: ./.github/.github/labels  # labels.json is default filename for github-label-sync
+        working-directory: ./labels  # labels.json is default filename for github-label-sync
         run: |
           github-label-sync pylhc/optics_functions
