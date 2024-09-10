@@ -1,6 +1,11 @@
 # Assign labels from json definition to all repos
 # This uses https://github.com/Financial-Times/github-label-sync
 
+# https://github.com/orgs/community/discussions/46566
+
+#
+# https://github.com/orgs/community/discussions/46566#discussioncomment-9638833
+
 name: Assign labels to all repos
 
 on:  # Runs on any push event in a PR or any push event to master
@@ -14,27 +19,27 @@ defaults:
     
 jobs:
   assign-labels:
-    runs-on: ubuntu-latest
     permissions: 
         issues: write
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      # - name: Test the repo
-      #   run: |
-      #     tree .
-
-      # - name: show current working directory
-      #   run: |
-      #     pwd
 
       - name: Install github-label-sync
         run: |
           npm install -g github-label-sync
 
+      - uses: qoomon/actions--access-token@v3
+        id: access-token
+        with:
+          repository: pylhc/optics_functions
+          permissions: |
+            issues: write
+
       - name: Assign labels into all repos
         working-directory: ./labels  # labels.json is default filename for github-label-sync
         env:
-          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACCESS_TOKEN: ${{ steps.access-token.outputs.token }}
         run: |
           github-label-sync pylhc/optics_functions
