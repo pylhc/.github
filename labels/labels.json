@@ -27,7 +27,7 @@
         "name": "Type: Feature",
         "color": "#047CFD",
         "aliases": ["Feature", "Enhancement"],
-        "description": "A (suggetion for) a new feature or enhancement in functionality."
+        "description": "A (suggetion for a) new feature or enhancement in functionality."
     },
     {
         "name": "Type: Question",
