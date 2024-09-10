@@ -11,6 +11,7 @@ on:  # Runs on any push event in a PR or any push event to master
 defaults:
   run:
     shell: bash
+    working-directory: ./assets  # labels.json is default filename for github-label-sync
     
 jobs:
   run-test:
@@ -19,6 +20,6 @@ jobs:
       - name: install github-label-sync
         run: |
           npm install -g github-label-sync
-      - name: Install into all repos
+      - name: Assign labels into all repos
         run: |
-          github-label-sync --labels ./assets/labels.json pylhc/optics_functions
+          github-label-sync pylhc/optics_functions
