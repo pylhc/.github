@@ -11,15 +11,19 @@ on:  # Runs on any push event in a PR or any push event to master
 defaults:
   run:
     shell: bash
-    working-directory: ../labels  # labels.json is default filename for github-label-sync
     
 jobs:
   assign-labels:
     runs-on: ubuntu-latest
     steps:
-      - name: install github-label-sync
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+
+      - name: Install github-label-sync
         run: |
           npm install -g github-label-sync
+
       - name: Assign labels into all repos
+        working-directory: ./.github/.github/labels  # labels.json is default filename for github-label-sync
         run: |
           github-label-sync pylhc/optics_functions
