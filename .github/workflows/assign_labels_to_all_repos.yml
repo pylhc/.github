@@ -16,11 +16,16 @@ jobs:
   assign-labels:
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout the repo
-      #   uses: actions/checkout@v4
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+
       - name: Test the repo
         run: |
           tree
+
+      - name: show current working directory
+        run: |
+          pwd
 
       # - name: Install github-label-sync
       #   run: |
