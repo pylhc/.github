@@ -1,0 +1,9 @@
+name: "👀 Other"
+description: Everything that does not fit with the other type of issues.
+body:
+  - type: textarea
+    id: content 
+    attributes:
+      label: Content 
+    validations:
+      required: true

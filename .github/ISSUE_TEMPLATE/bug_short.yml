@@ -1,0 +1,18 @@
+name: "🪳 Quick Bug Report"
+description: Report an issue with the package
+title: "[Bug]: "
+labels: ["Type: Bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening a bug report, please search if the problematic behavior has already been reported in the existing issues
+        and read the relevant documentation. Thank you for taking the time to file a bug report. 
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Give us a clear and concise description of the problem and the expected behavior.
+    validations:
+      required: true

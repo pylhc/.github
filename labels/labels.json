@@ -1,0 +1,127 @@
+[
+    {
+        "name": "Domain: GUI",
+        "color": "#8F12C9",
+        "aliases": ["GUI"],
+        "description": "Closely related to GUI and/or needs GUI changes as well."
+    },
+    {
+        "name": "Domain: Physics",
+        "color": "#EF8206",
+        "aliases": [],
+        "description": "The implementation is closely related to new physics to be used."
+    },
+    {
+        "name": "Type: Bug",
+        "color": "#FC060A",
+        "aliases": ["Bug", "Bugfix"],
+        "description": "Something isn't working as it should."
+    },
+    {
+        "name": "Type: Maintenance",
+        "color": "#fbca04",
+        "aliases": ["Maintenance"],
+        "description": "Improvements in the code, that are not necessarily visible in functionality."
+    },
+    {
+        "name": "Type: Feature",
+        "color": "#047CFD",
+        "aliases": ["Feature", "Enhancement"],
+        "description": "A (suggetion for a) new feature or enhancement in functionality."
+    },
+    {
+        "name": "Type: Question",
+        "color": "#FD067D",
+        "aliases": ["Question"],
+        "description": "Something is not clear or is not understood."
+    },
+    {
+        "name": "Type: Documentation",
+        "color": "#95FD04",
+        "aliases": ["Documentation"],
+        "description": "Improvements, updates and fixes to the documentation."
+    },
+    {
+        "name": "Type: CI/CD",
+        "color": "#646464",
+        "aliases": ["CI/CD"],
+        "description": "Improvements, updates and fixes to the continuous integration."
+    },
+    {
+        "name": "Type: Release",
+        "color": "#00E5FF",
+        "aliases": ["Release"],
+        "description": "Issue preparing for a release."
+    },
+    {
+        "name": "Status: Blocked",
+        "color": "#FDA8A9",
+        "aliases": [],
+        "description": "Cannot be worked on until something else happens (e.g. closing other issues)."
+    },
+    {
+        "name": "Status: In Progress",
+        "color": "#A1DCF7",
+        "aliases": [],
+        "description": "Currently being worked on."
+    },
+    {
+        "name": "Status: On Hold",
+        "color": "#B5A6F9",
+        "aliases": [],
+        "description": "Work currently stopped, but not for blocking reasons."
+    },
+    {
+        "name": "Status: Review Needed",
+        "color": "#FBE9A3",
+        "aliases": [],
+        "description": "Work currently stopped, untils someone else reviews it."
+    },
+    {
+        "name": "Status: Wontfix",
+        "color": "#DDDDDD",
+        "aliases": ["Wontfix"],
+        "description": "Cannot or should not be fixed."
+    },
+    {
+        "name": "Estimate: Easy",
+        "color": "#004709",
+        "aliases": ["Good First Issue"],
+        "description": "Good first issue for newcomers. Straightforward fixes."
+    },
+    {
+        "name": "Estimate: Normal",
+        "color": "#010545",
+        "aliases": [],
+        "description": "Straightforward, but might require some time. Probably needs additional tests."
+    },
+    {
+        "name": "Estimate: Complicated",
+        "color": "#540101",
+        "aliases": [],
+        "description": "Might need some major overhaul of the code."
+    },
+    {
+        "name": "Priority: Low",
+        "color": "#79CE38",
+        "aliases": ["Minor Issue"],
+        "description": "Work on this if you have some spare time."
+    },
+    {
+        "name": "Priority: Medium",
+        "color": "#D8D51F",
+        "aliases": [],
+        "description": "Work on this."
+    },
+    {
+        "name": "Priority: High",
+        "color": "#C65339",
+        "aliases": ["Important Issue"],
+        "description": "Work on this!"
+    },
+    {
+        "name": "Priority: Critical",
+        "color": "#CA3538",
+        "description": "Work on this!!"
+    }
+]

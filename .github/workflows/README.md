@@ -76,3 +76,9 @@ Secrets:
 - `PYPI_PASSWORD`: The pypi password.
 
 This workflow should be set to trigger anytime a `release` is made of the GitHub repository.
+
+
+## Assign Labels
+
+Assign labels from json definition file in `labels/` to selected pylhc repos. 
+This is not a re-usable workflow, but runs on every push to `master` on THIS repo.
