@@ -46,6 +46,9 @@ defaults:
   run:
     shell: bash
 
+env:
+  UV_SYSTEM_PYTHON: 1  # lets uv pip install in the python installed by uv (no need for venv step)
+
 jobs:
   tests: 
     name: ${{ matrix.os }} / ${{ matrix.python-version }}
