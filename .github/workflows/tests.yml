@@ -46,9 +46,6 @@ defaults:
   run:
     shell: bash
 
-env:
-  UV_SYSTEM_PYTHON: 1  # lets uv pip install in the python installed by uv (no need for venv step)
-
 jobs:
   tests: 
     name: ${{ matrix.os }} / ${{ matrix.python-version }}
@@ -71,9 +68,12 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: '**/${{ inputs.dependency-file }}'
+          cache-suffix: py${{ matrix.python-version }}
 
       - name: Set up Python ${{ matrix.python-version }}
-        run: uv python install ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
       - name: Install package
         run: uv pip install '.[${{ inputs.extra-dependencies }}]'

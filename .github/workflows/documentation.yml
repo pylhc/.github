@@ -48,9 +48,12 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: '**/${{ inputs.dependency-file }}'
+          cache-suffix: py${{ env.python-version }}
 
       - name: Set up Python ${{ env.python-version }}
-        run: uv python install ${{ env.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python-version }}
 
       - name: Install package
         run: uv pip install '.[${{ inputs.extra-dependencies }}]'
