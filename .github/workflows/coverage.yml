@@ -45,6 +45,9 @@ defaults:
   run:
     shell: bash
 
+env:
+  UV_SYSTEM_PYTHON: 1  # lets uv pip install in the Python from actions/setup-python
+
 jobs:
   coverage:
     runs-on: ubuntu-latest
