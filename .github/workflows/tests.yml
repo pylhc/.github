@@ -42,6 +42,11 @@ on:
         type: string
         default: pyproject.toml
 
+# Cancel in-progress workflows when pushing a new commit on the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 defaults:
   run:
     shell: bash
