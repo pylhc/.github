@@ -41,11 +41,15 @@ on:
         required: false 
         type: string
         default: pyproject.toml
+      cancel-in-progress:
+        required: false
+        type: boolean
+        default: true
 
-# Cancel in-progress workflows when pushing a new commit on the same branch
+# Cancel (by default) in-progress workflows when pushing a new commit on the same branch
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ inputs.cancel-in-progress }}
 
 defaults:
   run:
