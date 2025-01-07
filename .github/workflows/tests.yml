@@ -44,7 +44,7 @@ on:
       cancel-in-progress:
         required: false
         type: boolean
-        default: true
+        default: false
 
 # Cancel (by default) in-progress workflows when pushing a new commit on the same branch
 concurrency:
