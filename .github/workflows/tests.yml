@@ -41,6 +41,15 @@ on:
         required: false 
         type: string
         default: pyproject.toml
+      cancel-in-progress:
+        required: false
+        type: boolean
+        default: false
+
+# Cancel (by default) in-progress workflows when pushing a new commit on the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ inputs.cancel-in-progress }}
 
 defaults:
   run:
@@ -54,7 +63,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04, ubuntu-24.04, macos-latest, windows-latest]
         # We escape with quotes so it doesn't get interpreted as float (e.g. 3.10 -> 3.1 by GA's parser)
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - uses: actions/checkout@v4
