@@ -1,6 +1,6 @@
 # Simple reusable workflow, to test workflows calls with input
 
-name: Echo Test Workflow 
+name: Echo Test Workflow
 
 defaults:
   run:
@@ -14,7 +14,7 @@ on:
         required: false
         type: string
         default: "DEFAULT INPUT"   # without default: empty string
-    
+
 
 jobs:
   run-test:
@@ -23,4 +23,3 @@ jobs:
       - name: Echo the input
         run: |
           echo ${{ inputs.test-input }}
-    
