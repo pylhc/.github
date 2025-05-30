@@ -71,9 +71,6 @@ jobs:
           cache: 'pip'
           cache-dependency-path: '**/${{ inputs.dependency-file }}'
 
-      - name: Upgrade pip, setuptools and wheel
-        run: uv pip install --upgrade pip setuptools wheel
-
       - name: Install package
         run: uv pip install '.[${{ inputs.extra-dependencies }}]'
 

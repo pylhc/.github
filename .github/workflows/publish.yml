@@ -58,9 +58,6 @@ jobs:
           cache: 'pip'
           cache-dependency-path: '**/${{ inputs.dependency-file }}'
 
-      - name: Upgrade pip, setuptools, wheel, build and twine
-        run: uv pip install --upgrade pip setuptools wheel build twine
-
       - name: Build and check build
         run: |
           python -m build
