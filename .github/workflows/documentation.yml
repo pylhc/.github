@@ -55,10 +55,6 @@ jobs:
 
       - name: Set up Python ${{ env.python-version }}
         uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.python-version }}
-          cache: 'pip'
-          cache-dependency-path: '**/${{ inputs.dependency-file }}'
 
       - name: Install package
         run: uv pip install '.[${{ inputs.extra-dependencies }}]'
