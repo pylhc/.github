@@ -28,10 +28,6 @@ on:
         PYPI_PASSWORD:
             required: true
 
-# We use uv pip and it should use the system python from our runner
-env:
-  UV_SYSTEM_PYTHON: 1
-
 defaults:
   run:
     shell: bash
@@ -40,16 +36,10 @@ jobs:
   deploy: # only a single supported Python on latest ubuntu
     runs-on: ubuntu-latest
     env:
-        python-version: 3.13
+        python-version: "3.13"
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
-          cache-dependency-glob: '${{ inputs.dependency-file }}'
 
       - name: Set up Python ${{ env.python-version }}
         uses: actions/setup-python@v5
