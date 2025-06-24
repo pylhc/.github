@@ -41,10 +41,6 @@ on:
         CC_TEST_REPORTER_ID:
             required: true
 
-# We use uv pip and it should use the system python from our runner
-env:
-  UV_SYSTEM_PYTHON: 1
-
 defaults:
   run:
     shell: bash
@@ -53,23 +49,21 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
     env:
-        python-version: 3.13
+        python-version: "3.13"
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install uv
+      - name: Install uv and Python
         uses: astral-sh/setup-uv@v5
         with:
+          python-version: ${{ matrix.python-version }}
           enable-cache: true
           cache-dependency-glob: '${{ inputs.dependency-file }}'
 
-      - name: Set up Python ${{ env.python-version }}
-        uses: actions/setup-python@v5
-
-      # The uv pip option is meant for CI runners, since setup-python creates a system-wide Python
+      # The uv pip should make & use an env from the Python install of the previous step
       - name: Install package
-        run: uv pip install --break-system-packages '.[${{ inputs.extra-dependencies }}]'
+        run: uv pip install '.[${{ inputs.extra-dependencies }}]'
 
       - name: Set up env for CodeClimate (push)
         run: |
@@ -94,7 +88,7 @@ jobs:
           ./cc-test-reporter before-build
 
       - name: Run all tests
-        run: python -m pytest ${{ inputs.pytest-options }} --cov-report xml --cov=${{ inputs.src-dir }}
+        run: uv run python -m pytest ${{ inputs.pytest-options }} --cov-report xml --cov=${{ inputs.src-dir }}
 
       - name: Push Coverage to CodeClimate
         if: ${{ success() }}  # only if tests were successful
