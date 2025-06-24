@@ -57,7 +57,7 @@ jobs:
       - name: Install uv and Python
         uses: astral-sh/setup-uv@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ env.python-version }}
           enable-cache: true
           cache-dependency-glob: '${{ inputs.dependency-file }}'
 
