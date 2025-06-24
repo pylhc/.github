@@ -48,6 +48,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
           enable-cache: true
+          activate-environment: true
           cache-dependency-glob: '${{ inputs.dependency-file }}'
 
       # The uv pip should make & use an env from the Python install of the previous step
@@ -55,7 +56,7 @@ jobs:
         run: uv pip install '.[${{ inputs.extra-dependencies }}]'
 
       - name: Build documentation
-        run: uv run python -m sphinx -b html doc ./doc_build -d ./doc_build
+        run: python -m sphinx -b html doc ./doc_build -d ./doc_build
 
       - name: Upload build artifacts  # upload artifacts so reviewers can have a quick look without building documentation from the branch locally
         uses: actions/upload-artifact@v4
