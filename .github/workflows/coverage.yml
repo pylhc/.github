@@ -67,8 +67,9 @@ jobs:
       - name: Set up Python ${{ env.python-version }}
         uses: actions/setup-python@v5
 
+      # The uv pip option is meant for CI runners, since setup-python creates a system-wide Python
       - name: Install package
-        run: uv pip install '.[${{ inputs.extra-dependencies }}]'
+        run: uv pip install --break-system-packages '.[${{ inputs.extra-dependencies }}]'
 
       - name: Set up env for CodeClimate (push)
         run: |
