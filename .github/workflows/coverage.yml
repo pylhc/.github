@@ -89,7 +89,7 @@ jobs:
           ./cc-test-reporter before-build
 
       - name: Run all tests
-        run: uv run python -m pytest ${{ inputs.pytest-options }} --cov-report xml --cov=${{ inputs.src-dir }}
+        run: python -m pytest ${{ inputs.pytest-options }} --cov-report xml --cov=${{ inputs.src-dir }}
 
       - name: Push Coverage to CodeClimate
         if: ${{ success() }}  # only if tests were successful
