@@ -82,7 +82,7 @@ jobs:
 
       # The uv pip should make & use an env from the Python install of the previous step
       - name: Install package
-        run: uv pip install '.[${{ inputs.extra-dependencies }}]'
+        run: uv pip install '.[${{ inputs.extra-dependencies }}]' --compile-bytecode
 
       - name: Run Tests
         run: python -m pytest ${{ inputs.pytest-options }}
