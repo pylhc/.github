@@ -30,6 +30,9 @@ on:
         type: string
         default: pyproject.toml
 
+env:
+  UV_COMPILE_BYTECODE: 1
+
 defaults:
   run:
     shell: bash
