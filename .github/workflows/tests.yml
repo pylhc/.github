@@ -51,6 +51,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ inputs.cancel-in-progress }}
 
+env:
+  UV_COMPILE_BYTECODE: 1
+
 defaults:
   run:
     shell: bash
@@ -82,7 +85,7 @@ jobs:
 
       # The uv pip should make & use an env from the Python install of the previous step
       - name: Install package
-        run: uv pip install '.[${{ inputs.extra-dependencies }}]' --compile-bytecode
+        run: uv pip install '.[${{ inputs.extra-dependencies }}]'
 
       - name: Run Tests
         run: python -m pytest ${{ inputs.pytest-options }}
