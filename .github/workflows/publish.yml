@@ -41,18 +41,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ env.python-version }}
-        uses: actions/setup-python@v5
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ env.python-version }}
+          enable-cache: true
+          activate-environment: true
+          cache-dependency-glob: '${{ inputs.dependency-file }}'
 
-      - name: Build and check build
+      - name: Build
         run: |
-          python -m build
-          twine check dist/*
+          uv build
 
       - name: Publish
         if: ${{ success() }}
         env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          twine upload dist/*
+          uv publish
