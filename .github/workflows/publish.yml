@@ -49,18 +49,14 @@ jobs:
           activate-environment: true
           cache-dependency-glob: '${{ inputs.dependency-file }}'
 
-      - name: Upgrade wheel, build and twine
-        run: uv pip install --upgrade wheel build twine
-
-      - name: Build and check build
+      - name: Build
         run: |
-          python -m build
-          twine check dist/*
+          uv build
 
       - name: Publish
         if: ${{ success() }}
         env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          UV_PUBLISH_PASSWORD: ${{ secrets.PYPI_USERNAME }}
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          twine upload dist/*
+          uv publish
