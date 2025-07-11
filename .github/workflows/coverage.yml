@@ -37,9 +37,6 @@ on:
         required: false
         type: string
         default: pyproject.toml
-    secrets:
-        CC_TEST_REPORTER_ID:
-            required: true
 
 env:
   UV_COMPILE_BYTECODE: 1
