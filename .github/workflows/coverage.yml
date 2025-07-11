@@ -69,33 +69,12 @@ jobs:
       - name: Install package
         run: uv pip install '.[${{ inputs.extra-dependencies }}]'
 
-      - name: Set up env for CodeClimate (push)
-        run: |
-          echo "GIT_BRANCH=${GITHUB_REF/refs\/heads\//}" >> $GITHUB_ENV
-          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
-        if: github.event_name == 'push'
-
-      - name: Set up env for CodeClimate (pull_request)
-        env:
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          echo "GIT_BRANCH=$GITHUB_HEAD_REF" >> $GITHUB_ENV
-          echo "GIT_COMMIT_SHA=$PR_HEAD_SHA" >> $GITHUB_ENV
-        if: github.event_name == 'pull_request'
-
-      - name: Prepare CodeClimate binary
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        run: |
-          curl -LSs 'https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64' >./cc-test-reporter;
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
-
       - name: Run all tests
-        run: python -m pytest ${{ inputs.pytest-options }} --cov-report xml --cov=${{ inputs.src-dir }}
+        run: python -m pytest ${{ inputs.pytest-options }} --cov-report xml --cov-report term-missing --cov=${{ inputs.src-dir }}
 
-      - name: Push Coverage to CodeClimate
-        if: ${{ success() }}  # only if tests were successful
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        run: ./cc-test-reporter after-build
+      - name: Show Coverage Report to PR
+        uses: orgoro/coverage@v3.2
+        if: ${{ success() }} && github.event_name == 'pull_request' # only if tests were successful, and a PR
+        with:
+          coverageFile: coverage.xml  # default when using '--cov-report xml' option above
+          token: ${{ secrets.GITHUB_TOKEN }}
