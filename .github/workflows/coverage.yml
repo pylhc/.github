@@ -73,5 +73,6 @@ jobs:
         uses: orgoro/coverage@v3.2
         if: ${{ success() }} && github.event_name == 'pull_request' # only if tests were successful, and a PR
         with:
+          thresholdAll: 0.8  # we want at least 80% coverage for the package, fail if not
           coverageFile: coverage.xml  # default when using '--cov-report xml' option above
           token: ${{ secrets.GITHUB_TOKEN }}
