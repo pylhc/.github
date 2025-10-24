@@ -56,7 +56,7 @@ on:
       minimum_orange: # If above or equal to this value, the badge will be orange.
         required: false
         type: number
-        default: 60
+        default: 80
 
 env:
   UV_COMPILE_BYTECODE: 1
