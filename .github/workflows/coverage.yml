@@ -40,7 +40,7 @@ on:
       min_coverage: # minimum overall coverage
         required: false
         type: number
-        default: 0.60
+        default: 0.80
       min_diff_coverage: # minimum coverage for the diff in a PR
         required: false
         type: number
