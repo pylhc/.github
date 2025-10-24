@@ -1,6 +1,6 @@
 # Caller Template --------------------------------------------------------------
 
-# # Runs all tests and pushes coverage report to codeclimate
+# # Runs all tests and runs a coverage report via python-coverage-comment-action.
 # name: Coverage
 
 # on:  # Runs on all push events to master branch and any push related to a pull request
@@ -37,6 +37,26 @@ on:
         required: false
         type: string
         default: pyproject.toml
+      min_coverage: # minimum overall coverage
+        required: false
+        type: number
+        default: 0.80
+      min_diff_coverage: # minimum coverage for the diff in a PR
+        required: false
+        type: number
+        default: 0.60
+      allowed_coverage_decrease:  # allowed decrease from reference coverage
+        required: false
+        type: number
+        default: 0.05
+      minimum_green:  # If above or equal to this value, the badge will be green.
+        required: false
+        type: number
+        default: 90
+      minimum_orange: # If above or equal to this value, the badge will be orange.
+        required: false
+        type: number
+        default: 80
 
 env:
   UV_COMPILE_BYTECODE: 1
@@ -50,9 +70,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
         python-version: "3.13"
+        ALLOWED_COVERAGE_DECREASE: ${{ inputs.allowed_coverage_decrease }}  # allowed decrease from reference coverage
+        MIN_COVERAGE: ${{ inputs.min_coverage }}                            # minimum overall coverage
+        MIN_DIFF_COVERAGE: ${{ inputs.min_diff_coverage }}                  # minimum coverage for the diff in a PR
+        MINIMUM_GREEN: ${{ inputs.minimum_green }}                          # If above or equal to this value, the badge will be green.
+        MINIMUM_ORANGE: ${{ inputs.minimum_orange }}                        # Same with orange. Below is red.
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install uv and Python
         uses: astral-sh/setup-uv@v6
@@ -67,14 +92,37 @@ jobs:
         run: uv pip install '.[${{ inputs.extra-dependencies }}]'
 
       - name: Run all tests
-        run: python -m pytest ${{ inputs.pytest-options }} --cov-report xml --cov-report term-missing --cov=${{ inputs.src-dir }}
+        run: python -m pytest ${{ inputs.pytest-options }} --cov=${{ inputs.src-dir }}
 
-      - name: Show Coverage Report to PR
-        uses: orgoro/coverage@v3.2
-        if: ${{ success() }} && github.event_name == 'pull_request' # only if tests were successful, and a PR
+      - name: Coverage comment
+        id: coverage_comment
+        uses: py-cov-action/python-coverage-comment-action@v3
         with:
-          thresholdAll: 0.8  # we want at least 80% coverage for the package, fail if not
-          thresholdNew: 0.6  # we want at least 80% coverage for the new code, fail if not
-          thresholdModified: 0.6  # we want at least 60% coverage for the modified code, fail if not
-          coverageFile: coverage.xml  # default when using '--cov-report xml' option above
-          token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Coverage Decrease Calculation
+        id: coverage_decrease
+        env:
+           REF_COVERAGE: ${{ steps.coverage_comment.outputs.reference_percent_covered }}
+        run: |
+              MIN_ALLOWED=$(echo "${REF_COVERAGE} - ${ALLOWED_COVERAGE_DECREASE}" | bc)
+              echo "min_allowed=${MIN_ALLOWED}" >> $GITHUB_OUTPUT
+
+      - name: Check Coverage Decrease
+        if: ${{ steps.coverage_comment.outputs.new_percent_covered < steps.coverage_decrease.outputs.min_allowed }}
+        env:
+           MIN_COVERAGE_ALLOWED: ${{ steps.coverage_decrease.outputs.min_allowed }}
+           CURRENT_COVERAGE: ${{ steps.coverage_comment.outputs.new_percent_covered }}
+        run: echo "Coverage decreased more than allowed (${CURRENT_COVERAGE} < ${MIN_COVERAGE_ALLOWED})." && exit 1
+
+      - name: Minumum Coverage Check
+        if: ${{ steps.coverage_comment.outputs.new_percent_covered < env.MIN_COVERAGE }}
+        env:
+           CURRENT_COVERAGE: ${{ steps.coverage_comment.outputs.new_percent_covered }}
+        run: echo "Coverage is below minimum (${CURRENT_COVERAGE} < ${MIN_COVERAGE})." && exit 1
+
+      - name: Minimum Diff Coverage Check
+        if: ${{ steps.coverage_comment.outputs.diff_total_percent_covered < env.MIN_DIFF_COVERAGE }}
+        env:
+            CURRENT_DIFF_COVERAGE: ${{ steps.coverage_comment.outputs.diff_total_percent_covered }}
+        run: echo "Diff coverage is below minimum (${CURRENT_DIFF_COVERAGE} < ${MIN_DIFF_COVERAGE})." && exit 1

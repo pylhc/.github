@@ -34,7 +34,11 @@ The workflow should be run on all push-events except to `master`.
 ## Test Coverage
 
 Test coverage is calculated in the `coverage` workflow.
-It runs on `ubuntu-latest` and our latest supported Python version, and reports the coverage results of the test suite to `CodeClimate`.
+It runs on `ubuntu-latest` and our latest supported Python version, and reports the coverage results of the test suite to
+the [python-coverage-comment action](https://github.com/marketplace/actions/python-coverage-comment).
+This action creates a comment on pull requests with the coverage results and a badge showing the coverage status.
+On `master` pushes, the action also publishes the coverage results to a specific branch,
+which allows to browse the coverage in html format directly on github and create a dynamic coverage badge.
 
 Input parameters:
 
@@ -42,10 +46,11 @@ Input parameters:
 - `pytest-options`: options to be passed on to `pytest`, e.g. `-m "not cern_network"` (defaults to an empty string).
 - `extra-dependencies`: name of the extra dependencies required to run the tests (defaults to `test`).
 - `dependency-file`: name of the file which contains the dependencies (used to get a hash-id for the caching).
-
-Secrets:
-
-- `CC_TEST_REPORTER_ID`: The CodeClimate test-reporter ID.
+- `min-coverage`: minimum overall coverage required (defaults to `0.60`).
+- `min-diff-coverage`: minimum coverage for the diff in a pull request (defaults to `0.05`).
+- `allowed-coverage-decrease`: allowed decrease from reference coverage (defaults to `0.05`).
+- `minimum-green`: If coverage (in %) is above or equal to this value, the badge will be green (defaults to `90`).
+- `minimum-orange`: If coverage (in %) is above or equal to this value, the badge will be orange (defaults to `60`).
 
 This workflow should be triggered on pushes to `master` and any push to a `pull request`.
 
