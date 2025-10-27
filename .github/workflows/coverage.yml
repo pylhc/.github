@@ -1,3 +1,12 @@
+# Note -------------------------------------------------------------------------
+# For the action used in this workflow to work, the coverage file needs
+# to contain relative paths. The only way I found to set this, seems to be
+# to add it in your project settings, e.g. in pyproject.toml:
+
+# [tool.coverage.run]
+# relative_files = true
+
+
 # Caller Template --------------------------------------------------------------
 
 # # Runs all tests and runs a coverage report via python-coverage-comment-action.
