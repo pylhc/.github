@@ -112,6 +112,13 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ github.token }}
 
+      - name: Print Coverage Comment Outputs
+        run: |
+            echo "=== Coverage Action Outputs ==="
+            echo "reference_percent_covered: ${{ steps.coverage_comment.outputs.reference_percent_covered }}"
+            echo "new_percent_covered: ${{ steps.coverage_comment.outputs.new_percent_covered }}"
+            echo "diff_total_percent_covered: ${{ steps.coverage_comment.outputs.diff_total_percent_covered }}"
+
   check-coverage-pr:
     needs: coverage
     if: github.event_name == 'pull_request'
