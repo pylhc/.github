@@ -121,7 +121,6 @@ jobs:
         env:
            CURRENT_COVERAGE: ${{ needs.coverage.outputs.new_percent_covered }}
            REF_COVERAGE: ${{ needs.coverage.outputs.reference_percent_covered }}
-           ALLOWED_COVERAGE_DECREASE: ${{ env.ALLOWED_COVERAGE_DECREASE }}
         run: |
               MIN_COVERAGE_DECR=$(echo "${REF_COVERAGE} - ${ALLOWED_COVERAGE_DECREASE}" | bc)
               echo "Reference Coverage: ${REF_COVERAGE}"
