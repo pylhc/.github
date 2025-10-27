@@ -68,7 +68,13 @@ on:
         default: 80
 
 env:
+  python-version: "3.13"
   UV_COMPILE_BYTECODE: 1
+  ALLOWED_COVERAGE_DECREASE: ${{ inputs.allowed_coverage_decrease }}  # allowed decrease from reference coverage
+  MIN_COVERAGE: ${{ inputs.min_coverage }}                            # minimum overall coverage
+  MIN_DIFF_COVERAGE: ${{ inputs.min_diff_coverage }}                  # minimum coverage for the diff in a PR
+  MINIMUM_GREEN: ${{ inputs.minimum_green }}                          # If above or equal to this value, the badge will be green.
+  MINIMUM_ORANGE: ${{ inputs.minimum_orange }}                        # Same with orange. Below is red.
 
 defaults:
   run:
@@ -77,13 +83,10 @@ defaults:
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    env:
-        python-version: "3.13"
-        ALLOWED_COVERAGE_DECREASE: ${{ inputs.allowed_coverage_decrease }}  # allowed decrease from reference coverage
-        MIN_COVERAGE: ${{ inputs.min_coverage }}                            # minimum overall coverage
-        MIN_DIFF_COVERAGE: ${{ inputs.min_diff_coverage }}                  # minimum coverage for the diff in a PR
-        MINIMUM_GREEN: ${{ inputs.minimum_green }}                          # If above or equal to this value, the badge will be green.
-        MINIMUM_ORANGE: ${{ inputs.minimum_orange }}                        # Same with orange. Below is red.
+    outputs: # for the check-coverage-* jobs
+      reference_percent_covered: ${{ steps.coverage_comment.outputs.reference_percent_covered }}  # coverage ratio of the reference-branch (master)
+      new_percent_covered: ${{ steps.coverage_comment.outputs.new_percent_covered }}              # coverage ratio of the current branch (PR)
+      diff_total_percent_covered: ${{ steps.coverage_comment.outputs.diff_total_percent_covered }}  # coverage ratio of the files changed in the PR
 
     steps:
       - uses: actions/checkout@v5
@@ -109,29 +112,64 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Coverage Decrease Calculation
-        id: coverage_decrease
-        env:
-           REF_COVERAGE: ${{ steps.coverage_comment.outputs.reference_percent_covered }}
-        run: |
-              MIN_ALLOWED=$(echo "${REF_COVERAGE} - ${ALLOWED_COVERAGE_DECREASE}" | bc)
-              echo "min_allowed=${MIN_ALLOWED}" >> $GITHUB_OUTPUT
-
+  check-coverage-pr:
+    needs: coverage
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
       - name: Check Coverage Decrease
-        if: ${{ steps.coverage_comment.outputs.new_percent_covered < steps.coverage_decrease.outputs.min_allowed }}
         env:
-           MIN_COVERAGE_ALLOWED: ${{ steps.coverage_decrease.outputs.min_allowed }}
-           CURRENT_COVERAGE: ${{ steps.coverage_comment.outputs.new_percent_covered }}
-        run: echo "Coverage decreased more than allowed (${CURRENT_COVERAGE} < ${MIN_COVERAGE_ALLOWED})." && exit 1
+           CURRENT_COVERAGE: ${{ needs.coverage.outputs.new_percent_covered }}
+           REF_COVERAGE: ${{ needs.coverage.outputs.reference_percent_covered }}
+           ALLOWED_COVERAGE_DECREASE: ${{ env.ALLOWED_COVERAGE_DECREASE }}
+        run: |
+              MIN_COVERAGE_DECR=$(echo "${REF_COVERAGE} - ${ALLOWED_COVERAGE_DECREASE}" | bc)
+              echo "Reference Coverage: ${REF_COVERAGE}"
+              echo "Current Coverage: ${CURRENT_COVERAGE}"
+              echo "Minimum Allowed Coverage (decrease from Reference): ${MIN_COVERAGE_DECR}"
+              if (( $(echo "${CURRENT_COVERAGE} < ${MIN_COVERAGE_DECR}" | bc -l) )); then
+                echo "❌ Coverage decreased more than allowed (${CURRENT_COVERAGE} < ${MIN_COVERAGE_DECR})."
+                exit 1
+              fi
+              echo "✓ Coverage decrease is within allowed range"
 
-      - name: Minumum Coverage Check
-        if: ${{ steps.coverage_comment.outputs.new_percent_covered < env.MIN_COVERAGE }}
+      - name: Check Total Coverage
         env:
-           CURRENT_COVERAGE: ${{ steps.coverage_comment.outputs.new_percent_covered }}
-        run: echo "Coverage is below minimum (${CURRENT_COVERAGE} < ${MIN_COVERAGE})." && exit 1
+           CURRENT_COVERAGE: ${{ needs.coverage.outputs.new_percent_covered }}
+        run: |
+              echo "Current Coverage: ${CURRENT_COVERAGE}"
+              echo "Minimum Allowed Coverage: ${MIN_COVERAGE}"
+              if (( $(echo "${CURRENT_COVERAGE} < ${MIN_COVERAGE}" | bc -l) )); then
+                echo "❌ Coverage is below minimum (${CURRENT_COVERAGE} < ${MIN_COVERAGE})."
+                exit 1
+              fi
+              echo "✓ Coverage meets minimum requirement"
 
-      - name: Minimum Diff Coverage Check
-        if: ${{ steps.coverage_comment.outputs.diff_total_percent_covered < env.MIN_DIFF_COVERAGE }}
+      - name: Check Diff Coverage
         env:
-            CURRENT_DIFF_COVERAGE: ${{ steps.coverage_comment.outputs.diff_total_percent_covered }}
-        run: echo "Diff coverage is below minimum (${CURRENT_DIFF_COVERAGE} < ${MIN_DIFF_COVERAGE})." && exit 1
+            CURRENT_DIFF_COVERAGE: ${{ needs.coverage.outputs.diff_total_percent_covered }}
+        run: |
+              echo "Current Diff Coverage: ${CURRENT_DIFF_COVERAGE}"
+              echo "Minimum Allowed Diff Coverage: ${MIN_DIFF_COVERAGE}"
+              if (( $(echo "${CURRENT_DIFF_COVERAGE} < ${MIN_DIFF_COVERAGE}" | bc -l) )); then
+                echo "❌ Diff coverage is below minimum (${CURRENT_DIFF_COVERAGE} < ${MIN_DIFF_COVERAGE})."
+                exit 1
+              fi
+              echo "✓ Diff coverage meets minimum requirement"
+
+  check-coverage-base:
+    needs: coverage
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Total Coverage
+        env:
+           CURRENT_COVERAGE: ${{ needs.coverage.outputs.reference_percent_covered }}
+        run: |
+              echo "Current Coverage: ${CURRENT_COVERAGE}"
+              echo "Minimum Allowed Coverage: ${MIN_COVERAGE}"
+              if (( $(echo "${CURRENT_COVERAGE} < ${MIN_COVERAGE}" | bc -l) )); then
+                echo "❌ Coverage is below minimum (${CURRENT_COVERAGE} < ${MIN_COVERAGE})."
+                exit 1
+              fi
+              echo "✓ Coverage meets minimum requirement"
