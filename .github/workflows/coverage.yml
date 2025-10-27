@@ -128,10 +128,10 @@ jobs:
               echo "Current Coverage: ${CURRENT_COVERAGE}"
               echo "Minimum Allowed Coverage (decrease from Reference): ${MIN_COVERAGE_DECR}"
               if (( $(echo "${CURRENT_COVERAGE} < ${MIN_COVERAGE_DECR}" | bc -l) )); then
-                echo "❌ Coverage decreased more than allowed (${CURRENT_COVERAGE} < ${MIN_COVERAGE_DECR})."
+                echo "Failed: Coverage decreased more than allowed (${CURRENT_COVERAGE} < ${MIN_COVERAGE_DECR})."
                 exit 1
               fi
-              echo "✓ Coverage decrease is within allowed range"
+              echo "Success: Coverage decrease is within allowed range!"
 
       - name: Check Total Coverage
         env:
@@ -140,10 +140,10 @@ jobs:
               echo "Current Coverage: ${CURRENT_COVERAGE}"
               echo "Minimum Allowed Coverage: ${MIN_COVERAGE}"
               if (( $(echo "${CURRENT_COVERAGE} < ${MIN_COVERAGE}" | bc -l) )); then
-                echo "❌ Coverage is below minimum (${CURRENT_COVERAGE} < ${MIN_COVERAGE})."
+                echo "Failed: Coverage is below minimum (${CURRENT_COVERAGE} < ${MIN_COVERAGE})."
                 exit 1
               fi
-              echo "✓ Coverage meets minimum requirement"
+              echo "Success: Coverage meets minimum requirement!"
 
       - name: Check Diff Coverage
         env:
@@ -152,10 +152,10 @@ jobs:
               echo "Current Diff Coverage: ${CURRENT_DIFF_COVERAGE}"
               echo "Minimum Allowed Diff Coverage: ${MIN_DIFF_COVERAGE}"
               if (( $(echo "${CURRENT_DIFF_COVERAGE} < ${MIN_DIFF_COVERAGE}" | bc -l) )); then
-                echo "❌ Diff coverage is below minimum (${CURRENT_DIFF_COVERAGE} < ${MIN_DIFF_COVERAGE})."
+                echo "Failed: Diff coverage is below minimum (${CURRENT_DIFF_COVERAGE} < ${MIN_DIFF_COVERAGE})."
                 exit 1
               fi
-              echo "✓ Diff coverage meets minimum requirement"
+              echo "Success: Diff coverage meets minimum requirement!"
 
   check-coverage-base:
     needs: coverage
@@ -169,7 +169,7 @@ jobs:
               echo "Current Coverage: ${CURRENT_COVERAGE}"
               echo "Minimum Allowed Coverage: ${MIN_COVERAGE}"
               if (( $(echo "${CURRENT_COVERAGE} < ${MIN_COVERAGE}" | bc -l) )); then
-                echo "❌ Coverage is below minimum (${CURRENT_COVERAGE} < ${MIN_COVERAGE})."
+                echo "Failed: Coverage is below minimum (${CURRENT_COVERAGE} < ${MIN_COVERAGE})."
                 exit 1
               fi
-              echo "✓ Coverage meets minimum requirement"
+              echo "Success: Coverage meets minimum requirement!"
