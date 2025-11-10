@@ -46,23 +46,23 @@ on:
         required: false
         type: string
         default: pyproject.toml
-      min_coverage: # minimum overall coverage
+      min-coverage: # minimum overall coverage
         required: false
         type: number
         default: 0.80
-      min_diff_coverage: # minimum coverage for the diff in a PR
+      min-diff-coverage: # minimum coverage for the diff in a PR
         required: false
         type: number
         default: 0.60
-      allowed_coverage_decrease:  # allowed decrease from reference coverage
+      allowed-coverage-decrease:  # allowed decrease from reference coverage
         required: false
         type: number
         default: 0.05
-      minimum_green:  # If above or equal to this value, the badge will be green.
+      minimum-green:  # If above or equal to this value, the badge will be green.
         required: false
         type: number
         default: 90
-      minimum_orange: # If above or equal to this value, the badge will be orange.
+      minimum-orange: # If above or equal to this value, the badge will be orange.
         required: false
         type: number
         default: 80
@@ -70,11 +70,11 @@ on:
 env:
   python-version: "3.13"
   UV_COMPILE_BYTECODE: 1
-  ALLOWED_COVERAGE_DECREASE: ${{ inputs.allowed_coverage_decrease }}  # allowed decrease from reference coverage
-  MIN_COVERAGE: ${{ inputs.min_coverage }}                            # minimum overall coverage
-  MIN_DIFF_COVERAGE: ${{ inputs.min_diff_coverage }}                  # minimum coverage for the diff in a PR
-  MINIMUM_GREEN: ${{ inputs.minimum_green }}                          # If above or equal to this value, the badge will be green.
-  MINIMUM_ORANGE: ${{ inputs.minimum_orange }}                        # Same with orange. Below is red.
+  ALLOWED_COVERAGE_DECREASE: ${{ inputs.allowed-coverage-decrease }}  # allowed decrease from reference coverage
+  MIN_COVERAGE: ${{ inputs.min-coverage }}                            # minimum overall coverage
+  MIN_DIFF_COVERAGE: ${{ inputs.min-diff-coverage }}                  # minimum coverage for the diff in a PR
+  MINIMUM_GREEN: ${{ inputs.minimum-green }}                          # If above or equal to this value, the badge will be green.
+  MINIMUM_ORANGE: ${{ inputs.minimum-orange }}                        # Same with orange. Below is red.
 
 defaults:
   run:
