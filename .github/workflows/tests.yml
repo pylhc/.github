@@ -63,6 +63,7 @@ jobs:
     name: ${{ matrix.os }} / ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-22.04, ubuntu-24.04, macos-latest, windows-latest]
         # We escape with quotes so it doesn't get interpreted as float (e.g. 3.10 -> 3.1 by GA's parser)
