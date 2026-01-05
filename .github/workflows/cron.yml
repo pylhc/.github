@@ -34,7 +34,7 @@ on:
       fail-fast:
         required: false
         type: boolean
-        default: false
+        default: true
 
 env:
   UV_COMPILE_BYTECODE: 1
