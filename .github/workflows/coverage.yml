@@ -68,7 +68,7 @@ on:
         default: 80
 
 env:
-  python-version: "3.13"
+  python-version: "3.14"
   UV_COMPILE_BYTECODE: 1
   ALLOWED_COVERAGE_DECREASE: ${{ inputs.allowed-coverage-decrease }}  # allowed decrease from reference coverage
   MIN_COVERAGE: ${{ inputs.min-coverage }}                            # minimum overall coverage
@@ -89,10 +89,10 @@ jobs:
       diff_total_percent_covered: ${{ steps.coverage_comment.outputs.diff_total_percent_covered }}  # coverage ratio of the files changed in the PR
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install uv and Python
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ env.python-version }}
           enable-cache: true

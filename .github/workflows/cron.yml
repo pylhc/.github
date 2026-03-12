@@ -55,14 +55,14 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]  # add new versions when they are released
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - if: matrix.os == 'macos-latest'
         name: Set up hdf5
         run: brew install hdf5
 
       - name: Install uv and Python
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           enable-cache: true
