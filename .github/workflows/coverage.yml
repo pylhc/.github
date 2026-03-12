@@ -89,7 +89,7 @@ jobs:
       diff_total_percent_covered: ${{ steps.coverage_comment.outputs.diff_total_percent_covered }}  # coverage ratio of the files changed in the PR
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install uv and Python
         uses: astral-sh/setup-uv@v6
