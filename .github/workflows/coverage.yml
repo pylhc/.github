@@ -68,7 +68,7 @@ on:
         default: 80
 
 env:
-  python-version: "3.13"
+  python-version: "3.14"
   UV_COMPILE_BYTECODE: 1
   ALLOWED_COVERAGE_DECREASE: ${{ inputs.allowed-coverage-decrease }}  # allowed decrease from reference coverage
   MIN_COVERAGE: ${{ inputs.min-coverage }}                            # minimum overall coverage
