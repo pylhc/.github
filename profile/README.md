@@ -52,7 +52,7 @@ Package documentation · API references · Optics measurement and correction wor
 
 Contributions, bug reports and suggestions are welcome.
 
-See our **[contribution guidelines](https://pylhc.github.io/packages/development/contributing/)** for information on setting up a development environment, coding conventions and contributing to PyLHC projects.
+See our **[contribution guidelines](https://pylhc.github.io/packages/development/contributing.html)** for information on setting up a development environment, coding conventions and contributing to PyLHC projects.
 
 ---
 
