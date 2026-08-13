@@ -1,12 +1,12 @@
 <div align="center">
 
-# PyLHC
+<h1>PyLHC</h1>
 
-### Accelerator physics tools from the CERN Optics Measurements & Corrections team
+<h3>Accelerator physics tools from the CERN Optics Measurements &amp; Corrections team</h3>
 
-**Beam optics · Frequency analysis · Optics correction**
+<strong>Beam optics · Frequency analysis · Optics correction</strong>
 
-[Documentation](https://pylhc.github.io/) · [OMC3](https://github.com/pylhc/omc3)
+<a href="https://pylhc.github.io/">Documentation</a> · <a href="https://github.com/pylhc/omc3">OMC3</a>
 
 </div>
 
